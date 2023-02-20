@@ -70,12 +70,10 @@ export default {
   name: 'HomePage',
   data() {
     return {
-      alerts: [],
       tab: null,
       url: '',
       isLoading: false,
       page: null,
-      error: null,
       resourceTypes: [],
       resources: [],
       showFullImageDialog: false,
