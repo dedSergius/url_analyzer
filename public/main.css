@@ -1,0 +1,73 @@
+#app {
+  margin: 0 auto;
+  max-width: 1024px;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+img {
+  display: block;
+  margin: 2rem auto;
+  max-width: 100%;
+}
+
+.v-progress-circular {
+  margin-top: 2rem;
+}
+
+.v-data-table__wrapper {
+  margin-top: 2rem;
+}
+
+.v-tabs {
+  margin-top: 2rem;
+}
+
+.home-container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+.resources-list {
+  background-color: #efefef;
+}
+
+.resource-card {
+  padding: 10px;
+}
+
+.resource-card:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.resource-card .v-icon {
+  height: 0em;
+}
+
+.resource-card p {
+  margin: 10px 0 10px 10px;
+}
+
+.image-preview:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.full-image-dialog .v-card-title{
+  display: flex;
+  align-items: center;
+}
+
+.full-image {
+  max-width: 80%;
+}
