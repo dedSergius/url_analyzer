@@ -68,7 +68,6 @@ import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/themes/default.min.css";
 export default {
   name: 'HomePage',
-  compatConfig: { MODE: 3 },
   data() {
     return {
       alerts: [],
@@ -83,9 +82,6 @@ export default {
     };
   },
   computed: {
-    getHeaders() {
-      return function () { return this.headers.map(h => JSON.stringify(h)) } 
-    },
     containerClass() {
       return {
         'home-container': !this.page && !this.isLoading,
@@ -117,30 +113,26 @@ export default {
     },
     isValidUrl(url) {
       const urlPattern = new RegExp(
-        "^(https?:\\/\\/)?" + // Протокол (http, https и т.д.)
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|localhost)" + // Доменное имя или "localhost"
-        "(:\\d+)?" + // Необязательный порт
-        "(\\/[-a-z\\d%@_.~+&:]*)*" + // Необязательный путь
-        "(\\?[;&a-z\\d%@_.,~+&:=-]*)?" + // Необязательный запрос
+        "^(https?:\\/\\/)?" + 
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|localhost)" + 
+        "(:\\d+)?" + 
+        "(\\/[-a-z\\d%@_.~+&:]*)*" + 
+        "(\\?[;&a-z\\d%@_.,~+&:=-]*)?" + 
         "(\\#[-a-z\\d_]*)?$",
         "i"
       );
-
-      // Проверяем, соответствует ли URL заданному регулярному выражению
       return !!urlPattern.test(url);
     },
     getPathname(url) {
       const parsedUrl = new URL(url);
       const pathname = parsedUrl.pathname;
 
-      // If the pathname ends with a file, return the filename
       const fileNameRegex = /\/([^/]+\.[^/]+)$/;
       const fileNameMatch = pathname.match(fileNameRegex);
       if (fileNameMatch) {
         return fileNameMatch[1];
       }
 
-      // Otherwise, truncate the URL
       const maxPathLength = 30;
       let truncatedPath = pathname;
       if (truncatedPath.length > maxPathLength) {
