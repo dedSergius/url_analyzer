@@ -59,8 +59,16 @@ async function analyzeWebsite(url) {
     title,
     description,
     screenshot,
-    resources,
+    resources
   };
+}
+
+async function getRorotsTxt(url) {
+  const page = await browser.newPage();
+  const response = await page.goto(url + '/robots.txt', {
+    waitUntil: 'load',
+  });
+  return await response.text();
 }
 
 app.get('/api/analyze', async (req, res) => {
@@ -73,8 +81,14 @@ app.get('/api/analyze', async (req, res) => {
   }
 
   try {
-    const result = await analyzeWebsite(url);
-    res.json(result);
+    const [ page, robotsTxt ] = await Promise.all([
+      analyzeWebsite(url),
+      getRorotsTxt(url)
+    ]);
+    res.json({
+      ...page,
+      robotsTxt
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send(err);

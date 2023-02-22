@@ -43,7 +43,7 @@
           </v-tabs>
           <v-window v-model="tab">
             <v-window-item v-for="t in resourceTypes" :key="t" :value="t">
-              <v-card-text class="resources-list">
+              <v-card-text class="resources-list" v-if="t !== 'robots.txt'">
                 <v-card class="resource-card" v-for="resource in getPageResourcesByType(t)" :key="resource.url">
                   <p><strong>URL: </strong><a :href="resource.url" target="_blank">{{ getPathname(resource.url) }}</a></p>
                   <p><strong>Status: </strong><v-icon :color="getStatusColor(resource.status)">{{ getStatusIcon(resource.status) }}</v-icon> {{ resource.status }}</p>
@@ -53,6 +53,11 @@
                   <p><strong>Remote IP Address: </strong>{{ resource.remoteIPAddress }}</p>
                 </v-card>
               </v-card-text>
+              <v-card-text class="resources-list" v-else>
+                    <v-card class="resource-card">
+                      <pre :style="{margin: '10px'}">{{ page.robotsTxt }}</pre>
+                    </v-card>
+                  </v-card-text>
             </v-window-item>
           </v-window>
         </v-card>
@@ -100,7 +105,8 @@ export default {
       try {
         const response = await axios.get(`http://localhost/api/analyze?url=${this.url}`);
         this.page = response.data;
-        this.resourceTypes = [...new Set(response.data.resources.map((r) => r.type))];
+        this.resourceTypes = [...new Set(response.data.resources.map((r) => r.type)), 'robots.txt'];
+        console.log(this.resourceTypess);
         this.resources = response.data.resources;
       } catch (error) {
         console.error(error);
