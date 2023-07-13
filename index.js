@@ -63,7 +63,7 @@ async function analyzeWebsite(url) {
   };
 }
 
-async function getRorotsTxt(url) {
+async function getRobotsTxt(url) {
   const page = await browser.newPage();
   const response = await page.goto(url + '/robots.txt', {
     waitUntil: 'load',
@@ -83,7 +83,7 @@ app.get('/api/analyze', async (req, res) => {
   try {
     const [ page, robotsTxt ] = await Promise.all([
       analyzeWebsite(url),
-      getRorotsTxt(url)
+      getRobotsTxt(url)
     ]);
     res.json({
       ...page,
